@@ -6,7 +6,7 @@ const generateID = require("../utils/generateID.js");
 async function getHorario(req = request, res = response) {
     try {
       const [hor] = await promisePool.query(
-        "SELECT * FROM horarios"
+        "SELECT horarios.*, profesores.name AS profesor, grupos.name AS grupo, asignaturas.name AS asignatura FROM horarios INNER JOIN profesores ON horarios.id_prof = profesores.id JOIN grupos ON grupos.id = horarios.id_group JOIN asignaturas ON asignaturas.id = horarios.id_subject"
       );
       if (!hor.length)
         return res.status(200).json({
@@ -35,7 +35,7 @@ async function getHorarioById(req = request, res = response) {
     try {
         const {id} = req.params
       const [hor] = await promisePool.query(
-        "SELECT * FROM horarios WHERE id = ?", id
+        "SELECT horarios.*, profesores.name AS profesor, grupos.name AS grupo, asignaturas.name AS asignatura FROM horarios INNER JOIN profesores ON horarios.id_prof = profesores.id JOIN grupos ON grupos.id = horarios.id_group JOIN asignaturas ON asignaturas.id = horarios.id_subject WHERE horarios.id = ?", id
       );
       if (!hor.length)
         return res.status(200).json({
