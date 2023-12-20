@@ -64,9 +64,9 @@ async function getProfesorById(req = request, res = response) {
   //Controlador para crear un profesor
   async function createProfesor(req = request, res = response) {
     try {
-      const { name, matric, email, phone, password } = req.body;
+      let { name, matric, password, email, phone  } = req.body;
       const idGenerate = generateID();
-      if (!name || !password || !matric || !email)
+      if (!name || !matric || !password ||!email || !phone)
         return res.status(400).json({
           info: {
             ok: false,
@@ -74,34 +74,32 @@ async function getProfesorById(req = request, res = response) {
             message: "Todos los datos son requeridos"
           },
         });
-        //verificamos que el profesor no esté ya registrado
-        const [exist] = await promisePool.query(
-          "SELECT id FROM profesores WHERE matric = ?",
-          [matric.trim()]
-        );
-        
-        if (exist.length)
-          return res.status(400).json({
-            info: {
-              ok: true,
-              status: 400,
-              message: "El profesor ya existe"
-            },
-          });
-
-          //Encriptamos la contraseña
+      // verificamos que el profesor no exista
+      const [user] = await promisePool.query(
+        "SELECT id FROM profesores WHERE email = ?",
+        [email.trim()]
+      );
+      if (user.length)
+        return res.status(400).json({
+          info: {
+            ok: true,
+            status: 400,
+            message: "El correo ya está en uso"
+          },
+        });
+      //Encriptamos la contraseña
       const salt= await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
-          
-      //creamos el profesor
+      //creamos el usuario
       await promisePool.query("INSERT INTO profesores SET ?", [
         {
           id: idGenerate,
           name: name.trim(),
           matric: matric.trim(),
           email: email.trim(),
-          phone: phone.trim(),
           password: password.trim(),
+          phone: phone.trim(),
+          ...req.body,
         },
       ]);
       // Creamos el token
@@ -113,6 +111,7 @@ async function getProfesorById(req = request, res = response) {
         { expiresIn: process.env.JWT_EXPIRE }
       );
         return res
+        .cookie("token", token)
           .status(200)
           .json({
             info: {
@@ -121,12 +120,10 @@ async function getProfesorById(req = request, res = response) {
               message: "Profesor creado Correctamente"
             },
             data: {
-                id: idGenerate,
-                name: name.trim(),
-                matric: matric.trim(),
-                email: email.trim(),
-                phone: phone.trim(),
-                password: password.trim(),
+              id: idGenerate,name: name.trim(),
+              matric: matric.trim(),
+              email: email.trim(),
+              phone: phone.trim(),
             },
           });
   
