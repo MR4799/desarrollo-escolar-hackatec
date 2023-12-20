@@ -6,7 +6,7 @@ const generateID = require("../utils/generateID.js");
 async function getGrupos(req = request, res = response) {
     try {
       const [group] = await promisePool.query(
-        "SELECT * FROM grupos"
+        "SELECT grupos.*, profesores.name AS tutor FROM grupos INNER JOIN profesores ON grupos.id_tutor = profesores.id"
       );
       if (!group.length)
         return res.status(200).json({
@@ -35,7 +35,7 @@ async function getGruposById(req = request, res = response) {
     try {
         const {id} = req.params
       const [group] = await promisePool.query(
-        "SELECT * FROM grupos WHERE id = ?", id
+        "SELECT grupos.*, profesores.name AS tutor FROM grupos INNER JOIN profesores ON grupos.id_tutor = profesores.id WHERE grupos.id = ?", id
       );
       if (!group.length)
         return res.status(200).json({
@@ -151,7 +151,7 @@ async function getGruposById(req = request, res = response) {
             message: "El grupo no existe",
           },
         });
-      await promisePool.query("UPDATE grupo SET ? WHERE id = ?", [
+      await promisePool.query("UPDATE grupos SET ? WHERE id = ?", [
         { ...req.body },
         id,
       ]);
