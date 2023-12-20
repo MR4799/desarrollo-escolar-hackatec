@@ -41,80 +41,80 @@ async function getCalifAlumno(req = request, res = response) {
   }
 
   //Controlador para obtener calificaciones de los alumnos de un grupo
-async function getCalifByGrupo(req = request, res = response) {
-    try {
-        const {id} = req.params
-      const [group] = await promisePool.query(
-        "SELECT id FROM grupos WHERE id = ?", id
-      );
-      const [calif] = await promisePool.query(
-        "SELECT * FROM calificaciones WHERE id = ?", id
-      );
-      if (!group.length)
-        return res.status(200).json({
-        ok: false,
-        status: 200,
-        message: "No existe el grupo",
-    });
-    if (!calif.length)
-        return res.status(200).json({
-        ok: false,
-        status: 200,
-        message: "No existen calificaciones para mostrar",
-    });
-      return res.status(200).json({
-        ok: true,
-        status: 200,
-        message: 'Calificaciones de los alumnos obtenidas correctamente',
-        calif
-      });
-    } catch (error) {
-      return res.status(500).json({
-        ok: false,
-        status: 500,
-        message: 'Error al obtener las calificaciones de los alumnos',
-        error,
-      });
-    }
-  }
+// async function getCalifByGrupo(req = request, res = response) {
+//     try {
+//         const {id} = req.params
+//       const [group] = await promisePool.query(
+//         "SELECT id FROM grupos WHERE id = ?", id
+//       );
+//       const [calif] = await promisePool.query(
+//         "SELECT * FROM calificaciones WHERE id = ?", id
+//       );
+//       if (!group.length)
+//         return res.status(200).json({
+//         ok: false,
+//         status: 200,
+//         message: "No existe el grupo",
+//     });
+//     if (!calif.length)
+//         return res.status(200).json({
+//         ok: false,
+//         status: 200,
+//         message: "No existen calificaciones para mostrar",
+//     });
+//       return res.status(200).json({
+//         ok: true,
+//         status: 200,
+//         message: 'Calificaciones de los alumnos obtenidas correctamente',
+//         calif
+//       });
+//     } catch (error) {
+//       return res.status(500).json({
+//         ok: false,
+//         status: 500,
+//         message: 'Error al obtener las calificaciones de los alumnos',
+//         error,
+//       });
+//     }
+//   }
 
     //Controlador para obtener calificaciones de un alumno de una asignatura
-async function getCalifAlumnoByAsig(req = request, res = response) {
-    try {
-        const {id} = req.params
-      const [asig] = await promisePool.query(
-        "SELECT id FROM asignaturas WHERE id = ?", id
-      );
-      const [calif] = await promisePool.query(
-        "SELECT * FROM calificaciones WHERE id_subject = ?", id
-      );
-      if (!asig.length)
-        return res.status(200).json({
-        ok: false,
-        status: 200,
-        message: "No existe la asignatura",
-    });
-    if (!calif.length)
-        return res.status(200).json({
-        ok: false,
-        status: 200,
-        message: "No existen calificaciones para mostrar",
-    });
-      return res.status(200).json({
-        ok: true,
-        status: 200,
-        message: 'Calificaciones de los alumnos obtenidas correctamente',
-        calif
-      });
-    } catch (error) {
-      return res.status(500).json({
-        ok: false,
-        status: 500,
-        message: 'Error al obtener las calificaciones de los alumnos',
-        error,
-      });
-    }
-  }
+// async function getCalifAlumnoByAsig(req = request, res = response) {
+//     try {
+//         const {id} = req.params
+//       const [asig] = await promisePool.query(
+//         "SELECT id FROM asignaturas WHERE id = ?", id
+//       );
+//       const [calif] = await promisePool.query(
+//         "SELECT * FROM calificaciones WHERE id_subject = ?", id
+//       );
+//       if (!asig.length)
+//         return res.status(200).json({
+//         ok: false,
+//         status: 200,
+//         message: "No existe la asignatura",
+//     });
+//     if (!calif.length)
+//         return res.status(200).json({
+//         ok: false,
+//         status: 200,
+//         message: "No existen calificaciones para mostrar",
+//     });
+//       return res.status(200).json({
+//         ok: true,
+//         status: 200,
+//         message: 'Calificaciones de los alumnos obtenidas correctamente',
+//         calif
+//       });
+//     } catch (error) {
+//       return res.status(500).json({
+//         ok: false,
+//         status: 500,
+//         message: 'Error al obtener las calificaciones de los alumnos',
+//         error,
+//       });
+//     }
+//   }
 
   //Controlador para crear una calificación
   async function createCalif(req = request, res = response) {
@@ -307,8 +307,8 @@ async function getCalifAlumnoByAsig(req = request, res = response) {
 
   module.exports = {
     getCalifAlumno,
-    getCalifByGrupo,
-    getCalifAlumnoByAsig,
+    // getCalifByGrupo,
+    // getCalifAlumnoByAsig,
     createCalif,
     updateCalif,
     deleteCalif,
