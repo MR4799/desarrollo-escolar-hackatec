@@ -11,9 +11,9 @@ const {
 // Ruta para mostrar todas las calificaciones de un alumno
 routes.get("/byalumno/:id", getCalifAlumno);
 //Controlador para obtener calificaciones de los alumnos de un grupo
-routes.get("/bygrupo/:id", getCalifByGrupo);
+// routes.get("/bygrupo/:id", getCalifByGrupo);
 //Controlador para obtener calificaciones de los alumnos de un grupo
-routes.get("/byalumno/asig/:id", getCalifAlumnoByAsig);
+// routes.get("/byalumno/asig/:id", getCalifAlumnoByAsig);
 //Ruta para crear una calificación
 routes.post("/add", createCalif);
 //Ruta para actualizar un alumno
