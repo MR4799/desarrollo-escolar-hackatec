@@ -15,6 +15,10 @@ class Server {
     this.app.use('/grupos', require('../routes/grupos.routes.js'))
     this.app.use('/alumnos', require('../routes/alumnos.routes.js'))
     this.app.use('/calificaciones', require('../routes/calificaciones.routes.js'))
+    this.app.use('/profesores', require('../routes/profesores.routes.js'))
+    this.app.use('/tutores', require('../routes/tutores.routes.js'))
+    this.app.use('/comunicados', require('../routes/comunicados.routes.js'))
+    this.app.use('/horarios', require('../routes/horarios.routes.js'))
   }
   middlewares() {
     this.app.use(cors());
