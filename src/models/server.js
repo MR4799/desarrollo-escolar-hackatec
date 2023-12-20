@@ -10,7 +10,6 @@ class Server {
     this.server = require("http").createServer(this.app);
   }
   routes() {
-    this.app.use(express.static(path.join(__dirname,'../static')));
     this.app.use('/asignaturas', require('../routes/asignaturas.routes.js'))
     this.app.use('/grupos', require('../routes/grupos.routes.js'))
     this.app.use('/alumnos', require('../routes/alumnos.routes.js'))
