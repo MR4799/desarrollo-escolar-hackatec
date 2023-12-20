@@ -6,7 +6,7 @@ const generateID = require("../utils/generateID.js");
 async function getAlumnos(req = request, res = response) {
     try {
       const [alumn] = await promisePool.query(
-        "SELECT * FROM alumnos"
+        "SELECT alumnos.*, grupos.name AS grupo, grupos.classroom AS aula FROM alumnos INNER JOIN grupos ON alumnos.id_group = grupos.id"
       );
       if (!alumn.length)
         return res.status(200).json({
@@ -35,7 +35,7 @@ async function getAlumnoById(req = request, res = response) {
     try {
         const {id} = req.params
       const [alumn] = await promisePool.query(
-        "SELECT * FROM alumnos WHERE id = ?", id
+        "SELECT alumnos.*, grupos.name AS grupo, grupos.classroom AS aula FROM alumnos INNER JOIN grupos ON alumnos.id_group = grupos.id WHERE alumnos.id = ?", id
       );
       if (!alumn.length)
         return res.status(200).json({
