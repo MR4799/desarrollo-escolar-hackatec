@@ -11,11 +11,10 @@ class Server {
   }
   routes() {
     this.app.use(express.static(path.join(__dirname,'../static')));
-    this.app.use('/users', require('../routes/users.routes.js'))
-    this.app.use('/invitations', require('../routes/invitations.routes.js'))
-    this.app.use('/itinerary', require('../routes/itinerary.routes.js'))
-    this.app.use('/guests', require('../routes/guests.routes.js'))
-    this.app.use('/details', require('../routes/details.routes.js'))
+    this.app.use('/asignaturas', require('../routes/asignaturas.routes.js'))
+    this.app.use('/grupos', require('../routes/grupos.routes.js'))
+    this.app.use('/alumnos', require('../routes/alumnos.routes.js'))
+    this.app.use('/calificaciones', require('../routes/calificaciones.routes.js'))
   }
   middlewares() {
     this.app.use(cors());
