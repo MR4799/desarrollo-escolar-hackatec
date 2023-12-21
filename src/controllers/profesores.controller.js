@@ -37,7 +37,7 @@ async function getProfesorById(req = request, res = response) {
     try {
         const {id} = req.params
       const [prof] = await promisePool.query(
-        "SELECT * FROM profesores WHERE id = ?", id
+        "SELECT id, name, matric, email, phone FROM profesores WHERE id = ?", id
       );
       if (!prof.length)
         return res.status(200).json({
